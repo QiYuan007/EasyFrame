@@ -74,11 +74,17 @@ public class ResultSubscriber<T> extends Subscriber<T> {
          * 网络请求订阅开始
          */
         void onStart(int requestType);
-
+        /**
+         * 网络请求完成
+         */
         void onCompleted(int requestType);
-
+        /**
+         * 网络请求错误
+         */
         void onError(Throwable e,int requestType);
-
+        /**
+         * 处理请求结果
+         */
         void onNext(T t,int requestType);
     }
 }
