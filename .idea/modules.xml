@@ -4,6 +4,7 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/MyFramework.iml" filepath="$PROJECT_DIR$/MyFramework.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/xutils_db_library/xutils_db_library.iml" filepath="$PROJECT_DIR$/xutils_db_library/xutils_db_library.iml" />
     </modules>
   </component>
 </project>

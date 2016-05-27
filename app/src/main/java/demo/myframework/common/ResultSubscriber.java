@@ -1,5 +1,8 @@
 package demo.myframework.common;
 
+
+import demo.myframework.model.IModel;
+import demo.myframework.utils.L;
 import rx.Subscriber;
 
 /**
@@ -7,17 +10,15 @@ import rx.Subscriber;
  * @Data: 16/4/12 下午4:17
  * @Description: 自定义调阅者以及结果监听接口
  */
-public class ResultSubscriber<T> extends Subscriber<T> {
+public class ResultSubscriber extends Subscriber<IModel> {
     private int mRequestType;
-    private OnResultListener<T> mListener = null;
-
+    private OnResultListener mListener = null;
     /**
      * 自定义订阅，参数用来区分网络接口，以用来在不同接口操作过程中，处理不同的逻辑
-     * @param requestType
+     * @param
      */
-    public ResultSubscriber(int requestType) {
-        this.mRequestType = requestType;
-        mListener = new OnResultListener<T>() {
+    public ResultSubscriber() {
+        mListener = new OnResultListener() {
             @Override
             public void onStart(int requestType) {
             }
@@ -25,10 +26,10 @@ public class ResultSubscriber<T> extends Subscriber<T> {
             public void onCompleted(int requestType) {
             }
             @Override
-            public void onError(Throwable e, int requestType) {
+            public void onError(int requestType) {
             }
             @Override
-            public void onNext(T t, int requestType) {
+            public void onNext(IModel t, int requestType) {
             }
         };
     }
@@ -46,12 +47,14 @@ public class ResultSubscriber<T> extends Subscriber<T> {
     @Override
     public void onError(Throwable e) {
         if (e != null){
-            mListener.onError(e,mRequestType);
+            L.e("ResultSubscriber",e.getMessage());
+            e.printStackTrace();
+            mListener.onError(mRequestType);
         }
     }
 
     @Override
-    public void onNext(T t) {
+    public void onNext(IModel t) {
         mListener.onNext(t,mRequestType);
     }
 
@@ -66,10 +69,17 @@ public class ResultSubscriber<T> extends Subscriber<T> {
     }
 
     /**
-     * 订阅的监听器
-     * @param <T>
+     * 设置请求接口类型
+     * @param requestType
      */
-    public interface OnResultListener<T> {
+    public void setRequestType(int requestType) {
+        this.mRequestType = requestType;
+    }
+
+    /**
+     * 订阅的监听器
+     */
+    public interface OnResultListener {
         /**
          * 网络请求订阅开始
          */
@@ -81,10 +91,10 @@ public class ResultSubscriber<T> extends Subscriber<T> {
         /**
          * 网络请求错误
          */
-        void onError(Throwable e,int requestType);
+        void onError(int requestType);
         /**
          * 处理请求结果
          */
-        void onNext(T t,int requestType);
+        void onNext(IModel t, int requestType);
     }
 }

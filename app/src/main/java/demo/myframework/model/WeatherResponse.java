@@ -5,7 +5,7 @@ package demo.myframework.model;
  * @Data: 16/4/12 下午3:16
  * @Description:  天气信息模板
  */
-public class WeatherModel implements IModel{
+public class WeatherResponse extends Response {
 
     /**
      * city : 朝阳
