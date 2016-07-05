@@ -1,6 +1,8 @@
 package demo.myframework.http;
 
 
+import android.content.Context;
+
 import java.util.concurrent.TimeUnit;
 
 import demo.myframework.common.ResultSubscriber;
@@ -12,6 +14,7 @@ import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 import rx.Observable;
+import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Func1;
 import rx.schedulers.Schedulers;
@@ -29,15 +32,16 @@ public class HTTPHelper {
     private static final String BASE_PATH = "http://www.weather.com.cn/";//访问的地址
     private static final long DEFAULT_TIMEOUT = 5000;//默认超时时间(毫秒)
 
-
+    private Context mContext;
     private Retrofit mRetrofit;
     private INetInterface mNetService;
-    private ResultSubscriber mSubscriber;
 
     private HTTPHelper() {
         OkHttpClient.Builder okHttpClient = new OkHttpClient.Builder();
         okHttpClient.addNetworkInterceptor(new HTTPInterceptor());
         okHttpClient.connectTimeout(DEFAULT_TIMEOUT, TimeUnit.MILLISECONDS);
+        okHttpClient.readTimeout(DEFAULT_TIMEOUT, TimeUnit.MILLISECONDS);//等待服务器响应的时间
+        okHttpClient.writeTimeout(DEFAULT_TIMEOUT, TimeUnit.MILLISECONDS);
         mRetrofit = new Retrofit.Builder()
                 .client(okHttpClient.build())
                 .addConverterFactory(GsonConverterFactory.create())
@@ -46,7 +50,6 @@ public class HTTPHelper {
                 .build();
 
         mNetService = mRetrofit.create(INetInterface.class);
-        mSubscriber = new ResultSubscriber();
     }
 
     /**
@@ -63,14 +66,6 @@ public class HTTPHelper {
      */
     public static HTTPHelper getInstance() {
         return SingletonHolder.INSTANCE;
-    }
-
-    /**
-     * 获取ResultSubscriber对象
-     * @return
-     */
-    public ResultSubscriber getSubscriber(){
-        return mSubscriber;
     }
     /**
      * 类型转换，用来统一处理返回值，通常为公共message返回字段等。具体业务这里要具体操作
@@ -105,15 +100,17 @@ public class HTTPHelper {
      * @param resultType
      * @param listener
      */
-    private void initObservable(Observable observable, int resultType, ResultSubscriber.OnResultListener listener) {
-        mSubscriber.setOnResultListener(listener);
-        mSubscriber.setRequestType(resultType);
+    private Subscriber initObservable(Observable observable, int resultType, ResultSubscriber.OnResultListener listener) {
+        ResultSubscriber subscriber = new ResultSubscriber(mContext);
+        subscriber.setOnResultListener(listener);
+        subscriber.setRequestType(resultType);
         observable
 //                .map(new HttpResultFunc<WeatherResponse>())
                 .subscribeOn(Schedulers.io())
                 .unsubscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(mSubscriber);
+                .subscribe(subscriber);
+        return subscriber;
     }
     //********************************对应 INetService接口中定义的请求方法*************************************************//
 

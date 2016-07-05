@@ -1,4 +1,9 @@
 package demo.myframework.db;
+/**
+ * @Author: lizhipeng
+ * @Data: 16/5/25 下午4:31
+ * @Description: 基于xutils的数据库封装类
+ */
 
 
 import org.xutils.DbManager;
@@ -11,21 +16,22 @@ import org.xutils.x;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.concurrent.Callable;
 
 import demo.myframework.db.dao.BaseDb;
+import rx.Observable;
+import rx.Observer;
+import rx.Subscription;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
 
-/**
- * @Author: lizhipeng
- * @Data: 16/5/25 下午4:31
- * @Description: 基于xutils的数据库封装类
- */
 public class DBHelper {
     private DbManager.DaoConfig mDaoConfig;
     private DbManager mDbManager;
 
     private DBHelper() {
         mDaoConfig = new DbManager.DaoConfig()
-                .setDbName("patient.db")
+                .setDbName("eztdb.db")
                 // 不设置dbDir时, 默认存储在app的私有目录.
 //                .setDbDir(new File("/sdcard")) // "sdcard"的写法并非最佳实践
                 .setDbVersion(1)
@@ -46,9 +52,12 @@ public class DBHelper {
         mDbManager = x.getDb(mDaoConfig);
     }
 
+
     /**
      * 单例控制器
      */
+
+
     private static class SingletonHolder {
         private static final DBHelper INSTANCE = new DBHelper();
     }
@@ -58,6 +67,8 @@ public class DBHelper {
      *
      * @return
      */
+
+
     public DbManager getDbManager() {
         return mDbManager;
     }
@@ -67,6 +78,8 @@ public class DBHelper {
      *
      * @return
      */
+
+
     public static DBHelper getInstance() {
         return SingletonHolder.INSTANCE;
     }
@@ -76,12 +89,17 @@ public class DBHelper {
      *
      * @param entity
      */
-    public void save(Object entity) {
-        try {
-            mDbManager.save(entity);
-        } catch (DbException e) {
-            e.printStackTrace();
-        }
+    public void save(final Object entity) {
+        x.task().run(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    mDbManager.save(entity);
+                } catch (DbException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
     }
 
     /**
@@ -89,12 +107,19 @@ public class DBHelper {
      *
      * @param entity
      */
-    public void saveOrUpdate(Object entity) {
-        try {
-            mDbManager.saveOrUpdate(entity);
-        } catch (DbException e) {
-            e.printStackTrace();
-        }
+
+
+    public void saveOrUpdate(final Object entity) {
+        x.task().run(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    mDbManager.saveOrUpdate(entity);
+                } catch (DbException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
     }
 
     /**
@@ -103,12 +128,19 @@ public class DBHelper {
      *
      * @param entity
      */
-    public void saveBindingId(Object entity) {
-        try {
-            mDbManager.saveOrUpdate(entity);
-        } catch (DbException e) {
-            e.printStackTrace();
-        }
+
+
+    public void saveBindingId(final Object entity) {
+        x.task().run(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    mDbManager.saveOrUpdate(entity);
+                } catch (DbException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
     }
 
     /**
@@ -116,15 +148,20 @@ public class DBHelper {
      * 新的entityType中必须定义了这个列的属性.
      *
      * @param entityType
-     * @param column    列名
+     * @param column     列名
      * @throws DbException
      */
-    public <T extends BaseDb> void addColumn(Class<T> entityType, String column) {
-        try {
-            mDbManager.addColumn(entityType, column);
-        } catch (DbException e) {
-            e.printStackTrace();
-        }
+    public <T extends BaseDb> void addColumn(final Class<T> entityType, final String column) {
+        x.task().run(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    mDbManager.addColumn(entityType, column);
+                } catch (DbException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
     }
 
     /**
@@ -132,12 +169,18 @@ public class DBHelper {
      *
      * @param entity
      */
-    public void replace(Object entity) {
-        try {
-            mDbManager.replace(entity);
-        } catch (DbException e) {
-            e.printStackTrace();
-        }
+
+    public void replace(final Object entity) {
+        x.task().run(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    mDbManager.replace(entity);
+                } catch (DbException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
     }
 
     /**
@@ -146,12 +189,17 @@ public class DBHelper {
      * @param entityType
      * @param idValue
      */
-    public <T extends BaseDb> void deleteById(Class<T> entityType, Object idValue) {
-        try {
-            mDbManager.deleteById(entityType, idValue);
-        } catch (DbException e) {
-            e.printStackTrace();
-        }
+    public <T extends BaseDb> void deleteById(final Class<T> entityType, final Object idValue) {
+        x.task().run(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    mDbManager.deleteById(entityType, idValue);
+                } catch (DbException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
     }
 
     /**
@@ -159,12 +207,19 @@ public class DBHelper {
      *
      * @param entity
      */
-    public void delete(Object entity) {
-        try {
-            mDbManager.delete(entity);
-        } catch (DbException e) {
-            e.printStackTrace();
-        }
+
+
+    public void delete(final Object entity) {
+        x.task().run(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    mDbManager.delete(entity);
+                } catch (DbException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
     }
 
     /**
@@ -172,12 +227,19 @@ public class DBHelper {
      *
      * @param entityType
      */
-    public <T extends BaseDb> void delete(Class<T> entityType) {
-        try {
-            mDbManager.delete(entityType);
-        } catch (DbException e) {
-            e.printStackTrace();
-        }
+
+
+    public <T extends BaseDb> void delete(final Class<T> entityType) {
+        x.task().run(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    mDbManager.delete(entityType);
+                } catch (DbException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
     }
 
     /**
@@ -186,12 +248,19 @@ public class DBHelper {
      * @param entityType
      * @param whereBuilder
      */
-    public <T extends BaseDb> void delete(Class<T> entityType, WhereBuilder whereBuilder) {
-        try {
-            mDbManager.delete(entityType, whereBuilder);
-        } catch (DbException e) {
-            e.printStackTrace();
-        }
+
+
+    public <T extends BaseDb> void delete(final Class<T> entityType, final WhereBuilder whereBuilder) {
+        x.task().run(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    mDbManager.delete(entityType, whereBuilder);
+                } catch (DbException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
     }
 
     /**
@@ -200,12 +269,19 @@ public class DBHelper {
      * @param entityType
      * @throws DbException
      */
-    public <T extends BaseDb> void dropTable(Class<T> entityType) {
-        try {
-            mDbManager.dropTable(entityType);
-        } catch (DbException e) {
-            e.printStackTrace();
-        }
+
+
+    public <T extends BaseDb> void dropTable(final Class<T> entityType) {
+        x.task().run(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    mDbManager.dropTable(entityType);
+                } catch (DbException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
     }
 
     ///////////// find
@@ -218,13 +294,27 @@ public class DBHelper {
      * @param <T>
      * @return
      */
-    public <T extends BaseDb>  T findById(Class<T> entityType, Object idValue) {
-        try {
-            return mDbManager.findById(entityType, idValue);
-        } catch (DbException e) {
-            e.printStackTrace();
-        }
-        return null;
+
+
+    public <T extends BaseDb> Subscription findById(final Class<T> entityType, final Object idValue, Observer<T> observer) {
+        Observable<T> observable = Observable.fromCallable(new Callable<T>() {
+
+            @Override
+            public T call() {
+                try {
+                    return mDbManager.findById(entityType, idValue);
+                } catch (DbException e) {
+                    e.printStackTrace();
+                }
+                return null;
+            }
+        });
+
+        Subscription subscription = observable
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(observer);
+        return subscription;
     }
 
     /**
@@ -234,14 +324,26 @@ public class DBHelper {
      * @param <T>
      * @return
      */
-    public <T extends BaseDb>  T findFirst(Class<T> entityType) {
-        T t = null;
-        try {
-            t = mDbManager.findFirst(entityType);
-        } catch (DbException e) {
-            e.printStackTrace();
-        }
-        return t;
+
+
+    public <T extends BaseDb> Subscription findFirst(final Class<T> entityType, Observer<T> observer) {
+        Observable<T> observable = Observable.fromCallable(new Callable<T>() {
+
+            @Override
+            public T call() {
+                try {
+                    return mDbManager.findFirst(entityType);
+                } catch (DbException e) {
+                    e.printStackTrace();
+                }
+                return null;
+            }
+        });
+        Subscription subscription = observable
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(observer);
+        return subscription;
     }
 
     /**
@@ -251,14 +353,26 @@ public class DBHelper {
      * @param <T>
      * @return
      */
-    public <T extends BaseDb>  List<T> findAll(Class<T> entityType) {
-        List<T> list = null;
-        try {
-            list = mDbManager.findAll(entityType);
-        } catch (DbException e) {
-            e.printStackTrace();
-        }
-        return list;
+
+    public <T extends BaseDb> Subscription findAll(final Class<T> entityType, Observer<List<T>> observer) {
+        Observable<List<T>> observable = Observable.fromCallable(new Callable<List<T>>() {
+
+            @Override
+            public List<T> call() {
+                try {
+                    return mDbManager.findAll(entityType);
+                } catch (DbException e) {
+                    e.printStackTrace();
+                }
+                return null;
+            }
+        });
+        Subscription subscription = observable
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(observer);
+        return subscription;
+
     }
 
     /**
@@ -269,14 +383,26 @@ public class DBHelper {
      *                sqlInfo对象的创建的构造参数只需要传入一个sql语句即可
      * @return
      */
-    public DbModel findDbModelFirst(SqlInfo sqlInfo) {
-        DbModel model = null;
-        try {
-            model = mDbManager.findDbModelFirst(sqlInfo);
-        } catch (DbException e) {
-            e.printStackTrace();
-        }
-        return model;
+
+
+    public Subscription findDbModelFirst(final SqlInfo sqlInfo, Observer<DbModel> observer) {
+        Observable<DbModel> observable = Observable.fromCallable(new Callable<DbModel>() {
+
+            @Override
+            public DbModel call() {
+                try {
+                    return mDbManager.findDbModelFirst(sqlInfo);
+                } catch (DbException e) {
+                    e.printStackTrace();
+                }
+                return null;
+            }
+        });
+        Subscription subscription = observable
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(observer);
+        return subscription;
     }
 
     /**
@@ -285,14 +411,24 @@ public class DBHelper {
      * @param tableName
      * @return
      */
-    public DbModel findDbModelFirst(String tableName) {
-        DbModel model = null;
-        try {
-            model = mDbManager.findDbModelFirst(new SqlInfo("select * from " + tableName));
-        } catch (DbException e) {
-            e.printStackTrace();
-        }
-        return model;
+    public Subscription findDbModelFirst(final String tableName, Observer<DbModel> observer) {
+        Observable<DbModel> observable = Observable.fromCallable(new Callable<DbModel>() {
+
+            @Override
+            public DbModel call() {
+                try {
+                    return mDbManager.findDbModelFirst(new SqlInfo("select * from " + tableName));
+                } catch (DbException e) {
+                    e.printStackTrace();
+                }
+                return null;
+            }
+        });
+        Subscription subscription = observable
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(observer);
+        return subscription;
     }
 
     /**
@@ -301,14 +437,26 @@ public class DBHelper {
      * @param sqlInfo
      * @return
      */
-    public List<DbModel> findDbModelAll(SqlInfo sqlInfo) {
-        List<DbModel> list = null;
-        try {
-            list = mDbManager.findDbModelAll(sqlInfo);
-        } catch (DbException e) {
-            e.printStackTrace();
-        }
-        return list;
+
+    public Subscription findDbModelAll(final SqlInfo sqlInfo, Observer<List<DbModel>> observer) {
+
+        Observable<List<DbModel>> observable = Observable.fromCallable(new Callable<List<DbModel>>() {
+
+            @Override
+            public List<DbModel> call() {
+                try {
+                    return mDbManager.findDbModelAll(sqlInfo);
+                } catch (DbException e) {
+                    e.printStackTrace();
+                }
+                return null;
+            }
+        });
+        Subscription subscription = observable
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(observer);
+        return subscription;
     }
 
     /**
@@ -320,45 +468,80 @@ public class DBHelper {
      * @param <T>
      * @return
      */
-    public <T extends BaseDb>  List<T> selectorAll(Class<T> entityType, WhereBuilder whereBuilder) {
-        List<T> list = null;
-        try {
-            list = mDbManager.selector(entityType).where(whereBuilder).findAll();
-        } catch (DbException e) {
-            e.printStackTrace();
-        }
-        return list;
+
+    public <T extends BaseDb> Subscription selectorAll(final Class<T> entityType, final WhereBuilder whereBuilder, Observer<List<T>> observer) {
+        Observable<List<T>> observable = Observable.fromCallable(new Callable<List<T>>() {
+
+            @Override
+            public List<T> call() {
+                try {
+                    return mDbManager.selector(entityType).where(whereBuilder).findAll();
+                } catch (DbException e) {
+                    e.printStackTrace();
+                }
+                return null;
+            }
+        });
+        Subscription subscription = observable
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(observer);
+        return subscription;
+
+
     }
     ///////////// update
 
     /**
      * 更新实体所对应的表中的对应实体的相关属性
+     *
      * @param entity
      * @param updateColumnNames
      */
-    public void update(Object entity, String... updateColumnNames) {
-        try {
-            mDbManager.update(entity,updateColumnNames);
-        } catch (DbException e) {
-            e.printStackTrace();
-        }
+
+
+    public void update(final Object entity, final String... updateColumnNames) {
+        x.task().run(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    mDbManager.update(entity, updateColumnNames);
+                } catch (DbException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
     }
+
 
     /**
      * 更新实体所对应的表中，满足限定的条件的所有实体的指定的属性
-     * @param entityType 实体类型
-     * @param whereBuilder 限定条件
+     *
+     * @param entityType     实体类型
+     * @param whereBuilder   限定条件
      * @param nameValuePairs 键值对形式的对象，用来指定实体中的对应属性(key)和值(value)
      * @return 返回修改的个数
      */
-    public <T extends BaseDb> int update(Class<T> entityType, WhereBuilder whereBuilder, KeyValue... nameValuePairs){
-        int data = 0;
-        try {
-            data = mDbManager.update(entityType,whereBuilder,nameValuePairs);
-        } catch (DbException e) {
-            e.printStackTrace();
-        }
-        return data;
+
+
+    public <T extends BaseDb> Subscription update(final Class<T> entityType, Observer<Integer> observer, final WhereBuilder whereBuilder, final KeyValue... nameValuePairs) {
+        Observable<Integer> observable = Observable.fromCallable(new Callable<Integer>() {
+
+            @Override
+            public Integer call() {
+                try {
+                    return mDbManager.update(entityType, whereBuilder, nameValuePairs);
+                } catch (DbException e) {
+                    e.printStackTrace();
+                }
+                return null;
+            }
+        });
+        Subscription subscription = observable
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(observer);
+        return subscription;
     }
 
 
@@ -369,18 +552,26 @@ public class DBHelper {
      *
      * @throws DbException
      */
+
     public void dropDb() {
-        try {
-            mDbManager.dropDb();
-        } catch (DbException e) {
-            e.printStackTrace();
-        }
+        x.task().run(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    mDbManager.dropDb();
+                } catch (DbException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+
     }
 
     /**
      * 关闭数据库,
      * xUtils对同一个库的链接是单实例的, 一般不需要关闭它.
      */
+
     public void close() {
         try {
             mDbManager.close();
@@ -390,3 +581,4 @@ public class DBHelper {
     }
 
 }
+

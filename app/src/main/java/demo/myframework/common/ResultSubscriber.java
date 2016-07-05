@@ -1,8 +1,10 @@
 package demo.myframework.common;
 
 
+import android.content.Context;
+import android.util.Log;
+
 import demo.myframework.model.IModel;
-import demo.myframework.utils.L;
 import rx.Subscriber;
 
 /**
@@ -13,21 +15,28 @@ import rx.Subscriber;
 public class ResultSubscriber extends Subscriber<IModel> {
     private int mRequestType;
     private OnResultListener mListener = null;
+    private Context mContext;
+
     /**
      * 自定义订阅，参数用来区分网络接口，以用来在不同接口操作过程中，处理不同的逻辑
+     *
      * @param
      */
-    public ResultSubscriber() {
+    public ResultSubscriber(Context context) {
+        mContext = context;
         mListener = new OnResultListener() {
             @Override
             public void onStart(int requestType) {
             }
+
             @Override
             public void onCompleted(int requestType) {
             }
+
             @Override
             public void onError(int requestType) {
             }
+
             @Override
             public void onNext(IModel t, int requestType) {
             }
@@ -46,30 +55,39 @@ public class ResultSubscriber extends Subscriber<IModel> {
 
     @Override
     public void onError(Throwable e) {
-        if (e != null){
-            L.e("ResultSubscriber",e.getMessage());
-            e.printStackTrace();
-            mListener.onError(mRequestType);
+        try {
+            if (e != null) {
+                Log.e("ResultSubscriber","onError====>"+ e.getMessage());
+//                Log.i(HTTPInterceptor.TAG, "onErrorMessage=====>" + e.getMessage());
+//                Toast.shortToast(mContext, "网络异常，请稍后再试");
+                mListener.onError(mRequestType);
+                e.printStackTrace();
+            }
+        } catch (Throwable t) {
+            t.printStackTrace();
         }
+
     }
 
     @Override
     public void onNext(IModel t) {
-        mListener.onNext(t,mRequestType);
+        mListener.onNext(t, mRequestType);
     }
 
     /**
      * 设置订阅监听器
+     *
      * @param listener
      */
-    public void setOnResultListener(OnResultListener listener){
-        if (listener != null){
+    public void setOnResultListener(OnResultListener listener) {
+        if (listener != null) {
             mListener = listener;
         }
     }
 
     /**
      * 设置请求接口类型
+     *
      * @param requestType
      */
     public void setRequestType(int requestType) {
@@ -84,14 +102,17 @@ public class ResultSubscriber extends Subscriber<IModel> {
          * 网络请求订阅开始
          */
         void onStart(int requestType);
+
         /**
          * 网络请求完成
          */
         void onCompleted(int requestType);
+
         /**
          * 网络请求错误
          */
         void onError(int requestType);
+
         /**
          * 处理请求结果
          */
