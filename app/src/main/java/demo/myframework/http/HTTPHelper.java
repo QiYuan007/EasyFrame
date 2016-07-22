@@ -119,7 +119,7 @@ public class HTTPHelper {
      *
      * @param cityId
      */
-    public <T extends IModel> Subscriber getWeather(Class<T> clazz ,String cityId, int resultType, ResultSubscriber.OnResultListener listener) {
+    public <T extends IModel> Subscriber getWeather(String cityId, int resultType, ResultSubscriber.OnResultListener listener) {
         Observable<T> observable = (Observable<T>) mNetService.getWeather(cityId);
         return initObservable(observable, resultType, listener);
     }
@@ -128,7 +128,7 @@ public class HTTPHelper {
      *
      * @param body
      */
-    public <T extends IModel> Subscriber postWeather(Class<T> clazz , WeatherRequest body, int resultType, ResultSubscriber.OnResultListener listener) {
+    public <T extends IModel> Subscriber postWeather(WeatherRequest body, int resultType, ResultSubscriber.OnResultListener listener) {
         Observable<T> observable = (Observable<T>) mNetService.postWeather(body);
         return initObservable(observable, resultType, listener);
     }
