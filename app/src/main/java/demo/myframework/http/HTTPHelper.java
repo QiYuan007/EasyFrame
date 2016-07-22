@@ -119,18 +119,18 @@ public class HTTPHelper {
      *
      * @param cityId
      */
-    public <T extends IModel> void getWeather(Class<T> clazz ,String cityId, int resultType, ResultSubscriber.OnResultListener listener) {
+    public <T extends IModel> Subscriber getWeather(Class<T> clazz ,String cityId, int resultType, ResultSubscriber.OnResultListener listener) {
         Observable<T> observable = (Observable<T>) mNetService.getWeather(cityId);
-        initObservable(observable, resultType, listener);
+        return initObservable(observable, resultType, listener);
     }
     /**
      * post获取网络数据的方法
      *
      * @param body
      */
-    public <T extends IModel> void postWeather(Class<T> clazz , WeatherRequest body, int resultType, ResultSubscriber.OnResultListener listener) {
+    public <T extends IModel> Subscriber postWeather(Class<T> clazz , WeatherRequest body, int resultType, ResultSubscriber.OnResultListener listener) {
         Observable<T> observable = (Observable<T>) mNetService.postWeather(body);
-        initObservable(observable, resultType, listener);
+        return initObservable(observable, resultType, listener);
     }
 
 
