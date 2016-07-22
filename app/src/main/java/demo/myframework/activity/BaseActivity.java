@@ -11,7 +11,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import demo.myframework.R;
-import demo.myframework.http.HTTPHelper;
 
 
 public abstract class BaseActivity extends FragmentActivity {
@@ -151,14 +150,6 @@ public abstract class BaseActivity extends FragmentActivity {
                 }).setCancelable(false).create().show();
     }
 
-    /**
-     * 关闭网络请求
-     */
-    protected void closeHttp() {
-        if (!HTTPHelper.getInstance().getSubscriber().isUnsubscribed()) {
-            HTTPHelper.getInstance().getSubscriber().unsubscribe();
-        }
-    }
 
 //	protected void loadData(int dataType, OnLoadListener listener) {
 //		AsyncLoader loader = new AsyncLoader(dataType);
