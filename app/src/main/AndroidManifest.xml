@@ -19,6 +19,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <!--配置glide图片框架的内存缓存和磁盘缓存规则-->
+        <meta-data
+            android:name="demo.myframework.common.CustomCachingGlideModule"
+            android:value="GlideModule" />
+        <!--配置glide图片框架的内存缓存和磁盘缓存规则-->
     </application>
 
 </manifest>

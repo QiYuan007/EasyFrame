@@ -36,7 +36,7 @@ public class MainActivity extends BaseActivity implements ResultSubscriber.OnRes
             @Override
             public void onClick(View v) {
                 Log.i(TAG,"onClick");
-                HTTPHelper.getInstance().getWeather(WeatherResponse.class,"101010300.html",CODE,MainActivity.this);
+                HTTPHelper.getInstance().getWeather("101010300.html",CODE,MainActivity.this);
             }
         });
     }
