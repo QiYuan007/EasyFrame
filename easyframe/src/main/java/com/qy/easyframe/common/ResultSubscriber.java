@@ -1,11 +1,12 @@
-package demo.myframework.common;
+package com.qy.easyframe.common;
 
 
-import android.content.Context;
-import android.util.Log;
+import com.qy.easyframe.model.IModel;
+import com.qy.easyframe.utils.L;
 
-import demo.myframework.model.IModel;
 import rx.Subscriber;
+
+
 
 /**
  * @Author: lizhipeng
@@ -15,30 +16,24 @@ import rx.Subscriber;
 public class ResultSubscriber extends Subscriber<IModel> {
     private int mRequestType;
     private OnResultListener mListener = null;
-    private Context mContext;
 
     /**
      * 自定义订阅，参数用来区分网络接口，以用来在不同接口操作过程中，处理不同的逻辑
      *
      * @param
      */
-    public ResultSubscriber(Context context) {
-        mContext = context;
+    public ResultSubscriber() {
         mListener = new OnResultListener() {
             @Override
             public void onStart(int requestType) {
             }
 
             @Override
-            public void onCompleted(int requestType) {
+            public void onError(int requestType,Throwable e) {
             }
 
             @Override
-            public void onError(int requestType) {
-            }
-
-            @Override
-            public void onNext(IModel t, int requestType) {
+            public void onResult(IModel model, int requestType) {
             }
         };
     }
@@ -50,18 +45,18 @@ public class ResultSubscriber extends Subscriber<IModel> {
 
     @Override
     public void onCompleted() {
-        mListener.onCompleted(mRequestType);
     }
 
     @Override
     public void onError(Throwable e) {
         try {
             if (e != null) {
-                Log.e("ResultSubscriber","onError====>"+ e.getMessage());
-//                Log.i(HTTPInterceptor.TAG, "onErrorMessage=====>" + e.getMessage());
-//                Toast.shortToast(mContext, "网络异常，请稍后再试");
-                mListener.onError(mRequestType);
+                L.d("==========================================================onError=========================================================");
+                L.e(""+e.getMessage());
+                L.d("==========================================================onError=========================================================");
+                mListener.onError(mRequestType,e);
                 e.printStackTrace();
+                L.d("==========================================================onError=========================================================");
             }
         } catch (Throwable t) {
             t.printStackTrace();
@@ -70,8 +65,8 @@ public class ResultSubscriber extends Subscriber<IModel> {
     }
 
     @Override
-    public void onNext(IModel t) {
-        mListener.onNext(t, mRequestType);
+    public void onNext(IModel model) {
+        mListener.onResult(model, mRequestType);
     }
 
     /**
@@ -104,18 +99,13 @@ public class ResultSubscriber extends Subscriber<IModel> {
         void onStart(int requestType);
 
         /**
-         * 网络请求完成
-         */
-        void onCompleted(int requestType);
-
-        /**
          * 网络请求错误
          */
-        void onError(int requestType);
+        void onError(int requestType,Throwable e);
 
         /**
          * 处理请求结果
          */
-        void onNext(IModel t, int requestType);
+        void onResult(IModel model, int requestType);
     }
 }

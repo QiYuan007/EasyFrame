@@ -1,4 +1,4 @@
-package demo.myframework.common;
+package com.qy.easyframe.common;
 
 import android.content.Context;
 

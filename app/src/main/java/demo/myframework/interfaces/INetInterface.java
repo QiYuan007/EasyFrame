@@ -36,7 +36,7 @@ public interface INetInterface {
 
     /**
      * post请求
-     * @param params map请求体
+     * @param params 表单
      * @return
      */
     @POST("")

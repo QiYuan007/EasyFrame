@@ -1,4 +1,4 @@
-package demo.myframework.model;
+package com.qy.easyframe.model;
 
 /**
  * @Author: lizhipeng

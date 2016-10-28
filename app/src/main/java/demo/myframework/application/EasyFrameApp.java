@@ -2,9 +2,9 @@ package demo.myframework.application;
 
 import android.app.Application;
 
-import org.xutils.x;
+import com.qy.easyframe.common.AppFrame;
 
-import demo.myframework.common.Constant;
+import org.xutils.x;
 
 /**
  * @Author: lizhipeng
@@ -17,6 +17,7 @@ public class EasyFrameApp extends Application {
     public void onCreate() {
         super.onCreate();
         initXutils();
+        AppFrame.initDebug(true);
     }
 
     /**
@@ -24,6 +25,6 @@ public class EasyFrameApp extends Application {
      */
     private void initXutils() {
         x.Ext.init(this);
-        x.Ext.setDebug(Constant.isDebug); // 开启debug会影响性能
+        x.Ext.setDebug(true); // 开启debug会影响性能
     }
 }

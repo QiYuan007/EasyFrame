@@ -5,10 +5,11 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.qy.easyframe.common.ResultSubscriber;
+import com.qy.easyframe.model.IModel;
+
 import demo.myframework.R;
-import demo.myframework.common.ResultSubscriber;
-import demo.myframework.http.HTTPHelper;
-import demo.myframework.model.IModel;
+import demo.myframework.http.HttpRequest;
 import demo.myframework.model.WeatherResponse;
 
 
@@ -36,7 +37,7 @@ public class MainActivity extends BaseActivity implements ResultSubscriber.OnRes
             @Override
             public void onClick(View v) {
                 Log.i(TAG,"onClick");
-                HTTPHelper.getInstance().getWeather("101010300.html",CODE,MainActivity.this);
+                HttpRequest.getInstance().getWeather("101010300.html",CODE,MainActivity.this);
             }
         });
     }
@@ -52,36 +53,28 @@ public class MainActivity extends BaseActivity implements ResultSubscriber.OnRes
     }
 
     /**
-     * 网络请求完成调用，通常销毁Progressialog
-     * @param requestType
-     */
-    @Override
-    public void onCompleted(int requestType) {
-        Log.i(TAG,"onCompleted");
-        dismissProgressDialog();
-    }
-
-    /**
      * 网络请求错误后调用
      * @param requestType
      */
     @Override
-    public void onError(int requestType) {
+    public void onError(int requestType, Throwable e) {
         Log.i(TAG,"onError");
 
         dismissProgressDialog();
     }
 
     /**
-     * onNext 方法中处理请求下来的数据
-     * @param iModel
+     * onResult 方法中处理请求下来的数据
+     * @param model
      * @param requestType
      */
     @Override
-    public void onNext(IModel iModel, int requestType) {
+    public void onResult(IModel model, int requestType) {
         Log.i(TAG,"onNext"+requestType);
+        dismissProgressDialog();
         if (requestType == CODE){
-            mTextView.setText(((WeatherResponse)iModel).getWeatherinfo().toString());
+            mTextView.setText(((WeatherResponse)model).getWeatherinfo().toString());
         }
     }
+
 }

@@ -1,11 +1,14 @@
 package demo.myframework.model;
 
+
+import com.qy.easyframe.model.IModel;
+
 /**
  * @Author: lizhipeng
  * @Data: 16/4/12 下午3:16
  * @Description:  天气信息模板
  */
-public class WeatherResponse extends Response {
+public class WeatherResponse implements IModel {
 
     /**
      * city : 朝阳

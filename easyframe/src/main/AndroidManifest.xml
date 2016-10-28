@@ -1,0 +1,13 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" package="com.qy.easyframe">
+
+    <application android:allowBackup="true" android:label="@string/app_name"
+        android:supportsRtl="true">
+
+        <!--配置glide图片框架的内存缓存和磁盘缓存规则-->
+        <meta-data
+            android:name="com.qy.easyframe.common.CustomCachingGlideModule"
+            android:value="GlideModule" />
+        <!--配置glide图片框架的内存缓存和磁盘缓存规则-->
+    </application>
+
+</manifest>

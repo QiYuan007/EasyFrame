@@ -1,1 +1,1 @@
-include ':app', ':xutils_db_library'
+include ':app', ':xutils_db_library', ':easyframe'
