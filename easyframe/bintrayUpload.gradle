@@ -1,131 +1,133 @@
-apply plugin: 'com.github.dcendents.android-maven'
-apply plugin: 'com.jfrog.bintray'
-
-// load properties
-Properties properties = new Properties()
-File localPropertiesFile = project.file("local.properties");
-if(localPropertiesFile.exists()){
-    properties.load(localPropertiesFile.newDataInputStream())
-}
-File projectPropertiesFile = project.file("project.properties");
-if(projectPropertiesFile.exists()){
-    properties.load(projectPropertiesFile.newDataInputStream())
-}
-
-// read properties
-def projectName = properties.getProperty("project.name")
-def projectGroupId = properties.getProperty("project.groupId")
-def projectArtifactId = properties.getProperty("project.artifactId")
-def projectVersionName = android.defaultConfig.versionName
-def projectPackaging = properties.getProperty("project.packaging")
-def projectSiteUrl = properties.getProperty("project.siteUrl")
-def projectGitUrl = properties.getProperty("project.gitUrl")
-def projectDescription = properties.getProperty("project.description")
-
-def developerId = properties.getProperty("developer.id")
-def developerName = properties.getProperty("developer.name")
-def developerEmail = properties.getProperty("developer.email")
-
-def bintrayUser = properties.getProperty("bintray.user")
-def apiKey = properties.getProperty("bintray.apikey")
-//def bintrayApikey2 = properties.getProperty("bintray.apikey")
-
-group = projectGroupId
-version = projectVersionName
-
-// This generates POM.xml with proper parameters
-install {
-    repositories.mavenInstaller {
-        //this generates POM.xml with proper parameters
-        pom.project {
-            name projectName
-            description projectDescription
-            url projectSiteUrl
-            inceptionYear '2016'
-
-            groupId projectGroupId
-            artifactId projectArtifactId
-            version projectVersionName
-            packaging projectPackaging
-
-            // Set your license
-            licenses {
-                license {
-                    name 'The Apache Software License, Version 2.0'
-                    url 'http://www.apache.org/licenses/LICENSE-2.0.txt'
-                    distribution 'repo'
-                }
-            }
-
-            developers {
-                developer {
-                    id developerId
-                    name developerName
-                    email developerEmail
-                }
-            }
-
-            scm {
-                connection projectGitUrl
-                developerConnection projectGitUrl
-                url projectSiteUrl
-            }
-        }
-    }
-}
-
-// This generates sources.jar
-task sourcesJar(type: Jar) {
-    from android.sourceSets.main.java.srcDirs
-    classifier = 'sources'
-}
-
-
-task javadoc(type: Javadoc) {
-    options.encoding = "utf-8"
-    source = android.sourceSets.main.java.srcDirs
-    classpath += configurations.compile
-    classpath += project.files(android.getBootClasspath().join(File.pathSeparator))
-}
-
-// This generates javadoc.jar
-task javadocJar(type: Jar, dependsOn: javadoc) {
-    from javadoc.destinationDir
-    classifier = 'javadoc'
-}
-
-artifacts {
-    archives javadocJar
-    archives sourcesJar
-}
-
-// Javadoc configuration
-javadoc {  /*javadoc采用utf-8编码否则会报“GBK的不可映射字符”错误*/
-    options {
-        encoding 'UTF-8'
-        charSet 'UTF-8'
-        author true
-        version true
-        links "http://docs.oracle.com/javase/7/docs/api"
-    }
-}
-
-// bintray configuration
-bintray {
-    user = bintrayUser
-    key = apiKey
-
-    configurations = ['archives']
-
-    dryRun = false
-    publish = true
-
-    pkg {
-        repo = "AndroidLearnMaven"    //填写你在bintray上自己创建的Repository的名称
-        name = projectName
-        websiteUrl = projectSiteUrl
-        vcsUrl = projectGitUrl
-        licenses = ['Apache-2.0']
-        publicDownloadNumbers = true
-    }
-}
+//apply plugin: 'com.github.dcendents.android-maven'
+//apply plugin: 'com.jfrog.bintray'
+//
+//// load properties
+//Properties properties = new Properties()
+//File localPropertiesFile = project.file("local.properties");
+//if(localPropertiesFile.exists()){
+//    properties.load(localPropertiesFile.newDataInputStream())
+//}
+//File projectPropertiesFile = project.file("project.properties");
+//if(projectPropertiesFile.exists()){
+//    properties.load(projectPropertiesFile.newDataInputStream())
+//}
+//
+//// read properties
+//def projectName = properties.getProperty("project.name")
+//def projectGroupId = properties.getProperty("project.groupId")
+//def projectArtifactId = properties.getProperty("project.artifactId")
+//def projectVersionName = android.defaultConfig.versionName
+//def projectPackaging = properties.getProperty("project.packaging")
+//def projectSiteUrl = properties.getProperty("project.siteUrl")
+//def projectGitUrl = properties.getProperty("project.gitUrl")
+//def projectDescription = properties.getProperty("project.description")
+//
+//def developerId = properties.getProperty("developer.id")
+//def developerName = properties.getProperty("developer.name")
+//def developerEmail = properties.getProperty("developer.email")
+//
+//def bintrayUser = properties.getProperty("bintray.user")
+//def apiKey = properties.getProperty("bintray.apikey")
+//
+//group = projectGroupId
+//version = projectVersionName
+//
+//// This generates POM.xml with proper parameters
+//install {
+//    repositories.mavenInstaller {
+//        //this generates POM.xml with proper parameters
+//        pom.project {
+//            name projectName
+//            description projectDescription
+//            url projectSiteUrl
+//            inceptionYear '2016'
+//
+//            groupId projectGroupId
+//            artifactId projectArtifactId
+//            version projectVersionName
+//            packaging projectPackaging
+//
+//            // Set your license
+//            licenses {
+//                license {
+//                    name 'The Apache Software License, Version 2.0'
+//                    url 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+//                    distribution 'repo'
+//                }
+//            }
+//
+//            developers {
+//                developer {
+//                    id developerId
+//                    name developerName
+//                    email developerEmail
+//                }
+//            }
+//
+//            scm {
+//                connection projectGitUrl
+//                developerConnection projectGitUrl
+//                url projectSiteUrl
+//            }
+//        }
+//    }
+//}
+//
+//// This generates sources.jar
+//task sourcesJar(type: Jar) {
+//    from android.sourceSets.main.java.srcDirs
+//    classifier = 'sources'
+//}
+//
+//
+////task javadoc(type: Javadoc) {
+////    options.encoding = "utf-8"
+////    source = android.sourceSets.main.java.srcDirs
+////    classpath += configurations.compile
+////    classpath += project.files(android.getBootClasspath().join(File.pathSeparator))
+////}
+//
+//// This generates javadoc.jar
+////task javadocJar(type: Jar, dependsOn: javadoc) {
+////    from javadoc.destinationDir
+////    classifier = 'javadoc'
+////}
+//
+//artifacts {
+////    archives javadocJar
+//    archives sourcesJar
+//}
+//
+//// Javadoc configuration
+////javadoc {  /*javadoc采用utf-8编码否则会报“GBK的不可映射字符”错误*/
+////    options {
+////        encoding 'UTF-8'
+////        charSet 'UTF-8'
+////        author true
+////        version true
+////        links "http://docs.oracle.com/javase/7/docs/api"
+////    }
+////}
+//
+//// bintray configuration
+//bintray {
+//    user = bintrayUser
+//    key = apiKey
+//
+//    configurations = ['archives']
+//
+//    dryRun = false
+//    publish = true
+//
+//    pkg {
+//        repo = "maven"    //填写你在bintray上自己创建的Repository的名称
+//        name = projectName
+//        websiteUrl = projectSiteUrl
+//        vcsUrl = projectGitUrl
+//        licenses = ['Apache-2.0']
+//        publicDownloadNumbers = true
+//    }
+//}
+//
+//apply from: 'https://raw.githubusercontent.com/nuuneoi/JCenter/master/installv1.gradle'
+//apply from: 'https://raw.githubusercontent.com/nuuneoi/JCenter/master/bintrayv1.gradle'
