@@ -19,13 +19,6 @@ import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Func1;
 import rx.schedulers.Schedulers;
 
-
-
-/**
- * @Author: lizhipeng
- * @Data: 16/4/12 下午3:27
- * @Description: 网络请求数据类（单例）
- */
 public class HTTPHelper {
 
     /**
@@ -49,7 +42,6 @@ public class HTTPHelper {
 
     /**
      * 获取拦截器
-     * @return
      */
     public Interceptor getInterceptor() {
         return mInterceptor;
@@ -57,7 +49,6 @@ public class HTTPHelper {
 
     /**
      * 设置拦截器
-     * @param mInterceptor
      */
     public HTTPHelper setInterceptor(Interceptor mInterceptor) {
         this.mInterceptor = mInterceptor;
@@ -66,10 +57,6 @@ public class HTTPHelper {
 
     /**
      * 初始化
-     * @param baseUrl host地址
-     * @param clazz 接口
-     * @param <I>
-     * @return 返回接口实体类
      */
     public <I> I init(String baseUrl, Class<I> clazz){
         OkHttpClient.Builder okHttpClient = new OkHttpClient.Builder();
@@ -94,11 +81,6 @@ public class HTTPHelper {
     }
     /**
      * 初始化
-     * @param baseUrl host地址
-     * @param clazz 接口
-     * @param timeOut 超时时间
-     * @param <I>
-     * @return 返回接口实体类
      */
     public <I> I init(String baseUrl, Class<I> clazz,long timeOut){
         OkHttpClient.Builder okHttpClient = new OkHttpClient.Builder();

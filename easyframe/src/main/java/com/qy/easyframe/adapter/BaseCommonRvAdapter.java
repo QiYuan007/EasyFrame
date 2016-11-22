@@ -9,11 +9,6 @@ import android.view.ViewGroup;
 
 import java.util.List;
 
-/**
- * @Author: lizhipeng
- * @Data: 16/6/8 下午1:35
- * @Description:  通用RecyclerView 适配器
- */
 public abstract class BaseCommonRvAdapter<T> extends RecyclerView.Adapter<BaseCommonRvAdapter.ViewHolder> {
 
     protected Context mContext;
@@ -140,8 +135,6 @@ public abstract class BaseCommonRvAdapter<T> extends RecyclerView.Adapter<BaseCo
         /**
          * 通过viewId获取控件
          *
-         * @param viewId
-         * @return
          */
         public <T extends View> T getView(int viewId) {
             View view = mViews.get(viewId);

@@ -11,12 +11,6 @@ import com.qy.easyframe.common.RoundTransformation;
 
 import java.io.File;
 
-
-/**
- * @Author: lizhipeng
- * @Data: 16/5/25 上午9:30
- * @Description: Glide 图片框架封装
- */
 public class GlideUtils {
 
     public static int mImageId = -1;//默认图片id
@@ -40,10 +34,6 @@ public class GlideUtils {
 
     /**
      * 默认glide，不做任何处理
-     *
-     * @param context
-     * @param id
-     * @param view
      */
     public static void intoDefault(Context context, int id, ImageView view) {
         Glide.with(context)
@@ -53,10 +43,6 @@ public class GlideUtils {
 
     /**
      * glide 从字符串中加载图片（网络地址或者本地地址）
-     *
-     * @param context
-     * @param url
-     * @param view
      */
     public static void into(Context context, String url, ImageView view) {
         DrawableTypeRequest<String> request = Glide.with(context).load(url);
@@ -71,10 +57,6 @@ public class GlideUtils {
 
     /**
      * glide 从资源ID中加载图片
-     *
-     * @param context
-     * @param resourceId
-     * @param view
      */
     public static void into(Context context, int resourceId, ImageView view) {
         DrawableTypeRequest<Integer> request = Glide.with(context).load(resourceId);
@@ -89,9 +71,6 @@ public class GlideUtils {
     /**
      * glide 从文件中加载图片
      *
-     * @param context
-     * @param file
-     * @param view
      */
     public static void into(Context context, File file, ImageView view) {
         DrawableTypeRequest<File> request = Glide.with(context).load(file);
@@ -105,10 +84,6 @@ public class GlideUtils {
 
     /**
      * glide 从URI中加载图片
-     *
-     * @param context
-     * @param uri
-     * @param view
      */
     public static void into(Context context, Uri uri, ImageView view) {
         DrawableTypeRequest<Uri> request = Glide.with(context).load(uri);
@@ -123,11 +98,6 @@ public class GlideUtils {
     /**
      * glide 通过指定的大小从字符串中加载图片（网络地址或者本地地址）
      *
-     * @param context
-     * @param url
-     * @param view
-     * @param width
-     * @param height
      */
     public static void into(Context context, String url, ImageView view, int width, int height) {
         DrawableTypeRequest<String> request = Glide.with(context).load(url);
@@ -144,12 +114,6 @@ public class GlideUtils {
 
     /**
      * glide 通过指定的大小从资源ID中加载图片
-     *
-     * @param context
-     * @param resourceId
-     * @param view
-     * @param width
-     * @param height
      */
     public static void into(Context context, int resourceId, ImageView view, int width, int height) {
         DrawableTypeRequest<Integer> request = Glide.with(context).load(resourceId);
@@ -166,12 +130,6 @@ public class GlideUtils {
 
     /**
      * glide 通过指定的大小从文件中加载图片
-     *
-     * @param context
-     * @param file
-     * @param view
-     * @param width
-     * @param height
      */
     public static void into(Context context, File file, ImageView view, int width, int height) {
         DrawableTypeRequest<File> request = Glide.with(context).load(file);
@@ -188,12 +146,6 @@ public class GlideUtils {
 
     /**
      * glide 通过指定的大小从Uri中加载图片
-     *
-     * @param context
-     * @param uri
-     * @param view
-     * @param width
-     * @param height
      */
     public static void into(Context context, Uri uri, ImageView view, int width, int height) {
         DrawableTypeRequest<Uri> request = Glide.with(context).load(uri);
@@ -211,10 +163,6 @@ public class GlideUtils {
 
     /**
      * 高斯模糊图片处理
-     *
-     * @param context
-     * @param url
-     * @param view
      */
     public static void intoBlur(Context context, String url, ImageView view) {
         DrawableTypeRequest<String> request = Glide.with(context).load(url);
@@ -229,11 +177,6 @@ public class GlideUtils {
 
     /**
      * 圆或者圆角图片处理
-     *
-     * @param context
-     * @param url
-     * @param radius  单位dp
-     * @param view
      */
     public static void intoRound(Context context, String url, int radius, ImageView view) {
         DrawableTypeRequest<String> request = Glide.with(context).load(url);
@@ -248,11 +191,6 @@ public class GlideUtils {
 
     /**
      * 圆或者圆角图片处理
-     *
-     * @param context
-     * @param id
-     * @param radius  单位dp
-     * @param view
      */
     public static void intoRound(Context context, int id, int radius, ImageView view) {
         DrawableTypeRequest<Integer> request = Glide.with(context).load(id);
@@ -268,11 +206,6 @@ public class GlideUtils {
 
     /**
      * glide 从字符串中加载图片（网络地址或者本地地址）,
-     *
-     * @param context
-     * @param url
-     * @param view
-     * @param defaultId 默认的失败图片的id
      */
     public static void into(Context context, String url, ImageView view, int defaultId) {
         Glide.with(context).load(url)
@@ -284,12 +217,6 @@ public class GlideUtils {
 
     /**
      * 从字符串中加载圆形图片（网络地址或者本地地址）,
-     *
-     * @param context
-     * @param url
-     * @param radius
-     * @param view
-     * @param defaultId 默认的失败图片的id
      */
     public static void intoRound(Context context, String url, int radius, ImageView view, int defaultId) {
         Glide.with(context).load(url)

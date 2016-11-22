@@ -11,11 +11,6 @@ import android.renderscript.ScriptIntrinsicBlur;
 import com.bumptech.glide.load.engine.bitmap_recycle.BitmapPool;
 import com.bumptech.glide.load.resource.bitmap.BitmapTransformation;
 
-/**
- * @Author: lizhipeng
- * @Data: 16/5/25 上午10:43
- * @Description: glide 图片模糊算法
- */
 public class BlurTransformation extends BitmapTransformation {
 
     private RenderScript mRs;

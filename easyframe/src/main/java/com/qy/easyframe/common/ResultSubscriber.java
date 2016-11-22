@@ -6,21 +6,12 @@ import com.qy.easyframe.utils.L;
 
 import rx.Subscriber;
 
-
-
-/**
- * @Author: lizhipeng
- * @Data: 16/4/12 下午4:17
- * @Description: 自定义调阅者以及结果监听接口
- */
 public class ResultSubscriber extends Subscriber<IModel> {
     private int mRequestType;
     private OnResultListener mListener = null;
 
     /**
      * 自定义订阅，参数用来区分网络接口，以用来在不同接口操作过程中，处理不同的逻辑
-     *
-     * @param
      */
     public ResultSubscriber() {
         mListener = new OnResultListener() {
@@ -72,7 +63,6 @@ public class ResultSubscriber extends Subscriber<IModel> {
     /**
      * 设置订阅监听器
      *
-     * @param listener
      */
     public void setOnResultListener(OnResultListener listener) {
         if (listener != null) {
@@ -82,8 +72,6 @@ public class ResultSubscriber extends Subscriber<IModel> {
 
     /**
      * 设置请求接口类型
-     *
-     * @param requestType
      */
     public void setRequestType(int requestType) {
         this.mRequestType = requestType;

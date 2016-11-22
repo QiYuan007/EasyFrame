@@ -4,12 +4,6 @@ import android.util.Log;
 
 import com.qy.easyframe.common.AppFrame;
 
-
-/**
- * @Author: lizhipeng
- * @Data: 16/5/3 下午4:32
- * @Description: log的工具类
- */
 public class L {
 
     /**

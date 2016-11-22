@@ -1,6 +1,4 @@
 apply plugin: 'com.android.library'
-apply plugin: 'com.github.dcendents.android-maven'
-apply plugin: 'com.jfrog.bintray'
 
 android {
     compileSdkVersion 24
@@ -11,9 +9,6 @@ android {
         minSdkVersion 11
         targetSdkVersion 24
         versionCode 3
-        // This is the library version used when deploying the
-        versionName "3.0.0"
-
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
     }
@@ -42,36 +37,94 @@ dependencies {
     compile 'com.android.support:recyclerview-v7:24.1.1'
     compile 'com.github.bumptech.glide:glide:3.7.0'
 }
+apply plugin: 'com.github.dcendents.android-maven'
+apply plugin: 'com.jfrog.bintray'
 
-//apply from: "bintrayUpload.gradle"
+version = "1.0.1"
+def siteUrl = 'https://github.com/QiYuan007/EasyFrame'    // project homepage
+def gitUrl = 'https://github.com/QiYuan007/EasyFrame.git' // project git
+group = "com.qy.easyframe"
 
-tasks.withType(Javadoc) {
-    options.addStringOption('Xdoclint:none', '-quiet')
-    options.addStringOption('encoding', 'UTF-8')
-    options.addStringOption('charSet', 'UTF-8')
+install {
+    repositories.mavenInstaller {
+        // This generates POM.xml with proper parameters
+        pom {
+            project {
+                packaging 'aar'
+                name 'dessss'
+                url siteUrl
+                licenses {
+                    license {
+                        name 'The Apache software License, Version 2.0'
+                        url 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+                    }
+                }
+                developers {
+                    developer {//开发者信息
+                        id 'meikoz'
+                        name 'meikoz'
+                        email 'zhoujinlongdev@sina.com'
+                    }
+                }
+                scm {
+                    connection gitUrl
+                    developerConnection gitUrl
+                    url siteUrl
+                }
+            }
+        }
+    }
 }
-ext {
-    bintrayRepo = 'maven'
-    bintrayName = 'easy-frame'
-
-    publishedGroupId = 'com.qy.easyframe'
-    libraryName = 'easyframe'
-    artifact = 'easy-frame'
-
-    libraryDescription = 'frame for network and image'
-
-    siteUrl = 'https://github.com/QiYuan007/EasyFrame'
-    gitUrl = 'https://github.com/QiYuan007/EasyFrame.git'
-
-    libraryVersion = '3.0.0'
-
-    developerId = 'QiYuan007'
-    developerName = 'LiZhiPeng'
-    developerEmail = '496121717@qq.com'
-
-    licenseName = 'The Apache Software License, Version 2.0'
-    licenseUrl = 'http://www.apache.org/licenses/LICENSE-2.0.txt'
-    allLicenses = ["Apache-2.0"]
+task sourcesJar(type: Jar) {
+    from android.sourceSets.main.java.srcDirs
+    classifier = 'sources'
 }
-apply from: 'https://raw.githubusercontent.com/nuuneoi/JCenter/master/installv1.gradle'
-apply from: 'https://raw.githubusercontent.com/nuuneoi/JCenter/master/bintrayv1.gradle'
+
+task javadoc(type: Javadoc) {
+    source = android.sourceSets.main.java.srcDirs
+    classpath += project.files(android.getBootClasspath().join(File.pathSeparator))
+}
+
+task javadocJar(type: Jar, dependsOn: javadoc) {
+    classifier = 'javadoc'
+    from javadoc.destinationDir
+}
+
+javadoc {
+    options{
+        encoding 'UTF-8'
+        charSet 'UTF-8'
+        author true
+    }
+}
+
+artifacts {
+    archives javadocJar
+    archives sourcesJar
+}
+
+
+Properties properties = new Properties()
+properties.load(project.rootProject.file('local.properties').newDataInputStream())
+bintray {
+    user = properties.getProperty("bintray.user")
+    key = properties.getProperty("bintray.apikey")
+    configurations = ['archives']
+    pkg {
+        repo = "Maven"
+        name = "easyframe"                // project name in maven
+        websiteUrl = siteUrl
+        vcsUrl = gitUrl
+        licenses = ["Apache-2.0"]
+        publish = true
+    }
+}
+javadoc {
+    options{
+        encoding "UTF-8"
+        charSet 'UTF-8'
+        author true
+        version true
+        links "http://docs.oracle.com/javase/7/docs/api"
+    }
+}

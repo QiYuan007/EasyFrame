@@ -12,11 +12,6 @@ import com.bumptech.glide.load.engine.bitmap_recycle.BitmapPool;
 import com.bumptech.glide.load.resource.bitmap.BitmapTransformation;
 import com.bumptech.glide.load.resource.bitmap.TransformationUtils;
 
-/**
- * @Author: lizhipeng
- * @Data: 16/5/30 上午9:28
- * @Description: glide 图片圆形以及圆角转换算法
- */
 public class RoundTransformation extends BitmapTransformation {
     private float mRadius;//角度
 
@@ -24,10 +19,6 @@ public class RoundTransformation extends BitmapTransformation {
         this(context, 0);
     }
 
-    /**
-     * @param context
-     * @param radius  dp 单位
-     */
     public RoundTransformation(Context context, int radius) {
         super(context);
         //dp 转 px

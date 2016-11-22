@@ -12,11 +12,6 @@ import android.widget.TextView;
 
 import java.util.List;
 
-/**
- * @Author: lizhipeng
- * @Data: 16/5/23 下午3:21
- * @Description: 通用适配器
- */
 public abstract class BaseCommonAdapter<T> extends BaseAdapter {
     protected LayoutInflater mInflater;
     protected Context mContext;
@@ -76,13 +71,6 @@ public abstract class BaseCommonAdapter<T> extends BaseAdapter {
 
         /**
          * 拿到一个ViewHolder对象
-         *
-         * @param context
-         * @param convertView
-         * @param parent
-         * @param layoutId
-         * @param position
-         * @return
          */
         public static ViewHolder get(Context context, View convertView,
                                      ViewGroup parent, int layoutId, int position) {
@@ -98,9 +86,6 @@ public abstract class BaseCommonAdapter<T> extends BaseAdapter {
 
         /**
          * 通过控件的Id获取对应的控件，如果没有则加入views
-         *
-         * @param viewId
-         * @return
          */
         public <T extends View> T getView(int viewId) {
             View view = mViews.get(viewId);
@@ -113,10 +98,6 @@ public abstract class BaseCommonAdapter<T> extends BaseAdapter {
 
         /**
          * 为TextView设置字符串
-         *
-         * @param viewId
-         * @param text
-         * @return
          */
         public ViewHolder setText(int viewId, String text) {
             TextView view = getView(viewId);
@@ -127,9 +108,6 @@ public abstract class BaseCommonAdapter<T> extends BaseAdapter {
         /**
          * 为ImageView设置图片
          *
-         * @param viewId
-         * @param drawableId
-         * @return
          */
         public ViewHolder setImageResource(int viewId, int drawableId) {
             ImageView view = getView(viewId);
@@ -141,9 +119,6 @@ public abstract class BaseCommonAdapter<T> extends BaseAdapter {
         /**
          * 为ImageView设置图片
          *
-         * @param viewId
-         * @param bm
-         * @return
          */
         public ViewHolder setImageBitmap(int viewId, Bitmap bm) {
             ImageView view = getView(viewId);

@@ -14,12 +14,6 @@ import okhttp3.Request;
 import okhttp3.Response;
 import okhttp3.ResponseBody;
 
-
-/**
- * @Author: lizhipeng
- * @Data: 16/4/12 下午5:19
- * @Description: 定义http拦截器，用于设置http协议和日志调试
- */
 public class HTTPInterceptor implements Interceptor {
     private static String TAG = "HTTP-Interceptor";
     private Headers mHeaders;

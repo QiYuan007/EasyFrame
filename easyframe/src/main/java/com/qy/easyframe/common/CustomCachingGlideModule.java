@@ -10,11 +10,6 @@ import com.bumptech.glide.load.engine.cache.LruResourceCache;
 import com.bumptech.glide.load.engine.cache.MemorySizeCalculator;
 import com.bumptech.glide.module.GlideModule;
 
-/**
- * @Author: lizhipeng
- * @Data: 16/5/25 上午9:50
- * @Description: 配置glide图片框架的内存缓存和磁盘缓存规则
- */
 public class CustomCachingGlideModule implements GlideModule {
     @Override
     public void applyOptions(Context context, GlideBuilder builder) {
