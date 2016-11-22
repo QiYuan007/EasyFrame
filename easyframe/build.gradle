@@ -40,7 +40,7 @@ dependencies {
 apply plugin: 'com.github.dcendents.android-maven'
 apply plugin: 'com.jfrog.bintray'
 
-version = "1.0.1"
+version = "3.0.0"
 def siteUrl = 'https://github.com/QiYuan007/EasyFrame'    // project homepage
 def gitUrl = 'https://github.com/QiYuan007/EasyFrame.git' // project git
 group = "com.qy.easyframe"
@@ -61,9 +61,9 @@ install {
                 }
                 developers {
                     developer {//开发者信息
-                        id 'meikoz'
-                        name 'meikoz'
-                        email 'zhoujinlongdev@sina.com'
+                        id 'qiyuan007'
+                        name 'qiyuan007'
+                        email 'lzp496121717@gmail.com'
                     }
                 }
                 scm {
@@ -103,16 +103,17 @@ artifacts {
     archives sourcesJar
 }
 
-
 Properties properties = new Properties()
 properties.load(project.rootProject.file('local.properties').newDataInputStream())
 bintray {
     user = properties.getProperty("bintray.user")
     key = properties.getProperty("bintray.apikey")
+//    organizationId = properties.getProperty("bintray.organizationId")
     configurations = ['archives']
     pkg {
-        repo = "Maven"
-        name = "easyframe"                // project name in maven
+        userOrg = "x1wh"
+        repo = "easy-frame"
+        name = "easy-frame"                // project name in maven
         websiteUrl = siteUrl
         vcsUrl = gitUrl
         licenses = ["Apache-2.0"]
