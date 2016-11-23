@@ -12,7 +12,7 @@
 	</dependency>
 
 ###使用方法：
-#####一.网络请求的回调接口为ResultSubscriber.OnResultListener在请求网络的界面或者业务逻辑中实现此接口并实现接口的三个方法，分别是：
+####一.网络请求的回调接口为ResultSubscriber.OnResultListener在请求网络的界面或者业务逻辑中实现此接口并实现接口的三个方法，分别是：
 
 		/**
          * 网络请求订阅开始
@@ -30,7 +30,7 @@
         void onResult(IModel model, int requestType);
         
 三个方法看名字就知道对应的功能，其中 requestType 字段为不同网络请求的标示，可以自行区分。IModel 类为返回的json字段对应的 JavaBean 类的公共父类，所有的 Response 的类，都要继承 IModel 类。
-#####二.定义你的针对 Retrofit 的网络请求接口，如下：
+####二.定义你的针对 Retrofit 的网络请求接口，如下：
 
 	/**
 	 * @Author: qiyuan
@@ -70,7 +70,7 @@
 #####注意
 此接口不能有继承关系
 
-#####三.定义第二步网络请求接口的实现类，如下:
+####三.定义第二步网络请求接口的实现类，如下:
 	/**
 	 * @Author: qiyuan
 	 * @Data: 16/10/25 下午3:24
@@ -142,7 +142,7 @@
 	HTTPHelper.getInstance().doRequest(observable, resultType, listener)
 此方法返回Subscriber对象，可以用此对象来中断网络操作，比如在界面销毁时中断。
 
-#####Activity或者Fragment或者其他业务中的使用
+####Activity或者Fragment或者其他业务中的使用
 	比如demo中的点击事件中，直接调用上一步的接口实现类的方法，并传递对应参数。
 	mButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -151,7 +151,7 @@
                 HttpRequest.getInstance().getWeather("101010300.html",CODE,MainActivity.this);
             }
         });
-#####总结
+####总结
 	三步实现网络请求
 		1.实现ResultSubscriber.OnResultListener监听
 		2.实现对应网络请求的接口类
