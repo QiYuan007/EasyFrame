@@ -1,20 +1,20 @@
 #EasyFrame 3.0.0 网络框架使用说明
 ***
-	[EasyFrame3.0.0](https://github.com/QiYuan007/EasyFrame)是采用 RxJava 和 Retrofit 实现的网络处理架构，采用 Glide 作为图片处理架构。极大的简化了APP开发中的框架搭建，library项目已经上传 Jcenter 和 Maven 库，使用方式如下：
+[EasyFrame3.0.0](https://github.com/QiYuan007/EasyFrame)是采用 RxJava 和 Retrofit 实现的网络处理架构，采用 Glide 作为图片处理架构。极大的简化了APP开发中的框架搭建，library项目已经上传 Jcenter 和 Maven 库，使用方式如下：
 ###Jcenter：
-	`compile 'com.qy.easyframe:easyframe:3.0.0'`
+	compile 'com.qy.easyframe:easyframe:3.0.0'
 ###Maven：
-	`<dependency>
+	<dependency>
 	  <groupId>com.qy.easyframe</groupId>
 	  <artifactId>easyframe</artifactId>
 	  <version>3.0.0</version>
 	  <type>pom</type>
-	</dependency>`
+	</dependency>
 
 ###使用方法：
 #####一.
-	网络请求的回调接口为`ResultSubscriber.OnResultListener`在请求网络的界面或者业务逻辑中实现此接口并实现接口的三个方法，分别是：
-	` /**
+	网络请求的回调接口为ResultSubscriber.OnResultListener在请求网络的界面或者业务逻辑中实现此接口并实现接口的三个方法，分别是：
+	 /**
          * 网络请求订阅开始
          */
         void onStart(int requestType);
@@ -27,11 +27,11 @@
         /**
          * 处理请求结果
          */
-        void onResult(IModel model, int requestType);`
+        void onResult(IModel model, int requestType);
     三个方法看名字就知道对应的功能，其中 requestType 字段为不同网络请求的标示，可以自行区分。IModel 类为返回的json字段对应的 JavaBean 类的公共父类，所有的 Response 的类，都要继承 IModel 类。
 #####二.
 	定义你的针对 Retrofit 的网络请求接口，如下：
-	`/**
+	/**
 	 * @Author: qiyuan
 	 * @Data: 16/4/12 下午2:57
 	 * @Description:  网络请求接口
@@ -60,7 +60,7 @@
 	     */
 	    @POST("data/cityinfo/")
 	    Observable<WeatherResponse> postWeather2(@FieldMap Map<String, String> params);
-	}`
+	}
 如上接口，需要自定义的地方有：
 
 * 请求方式的注解内的字符串，替换成自己的除主机地址外的地址或者全地址（通常是除主机外的地址）
@@ -71,7 +71,7 @@
 
 #####三.
 	定义第二步网络请求接口的实现类，如下:
-	`/**
+	/**
 	 * @Author: qiyuan
 	 * @Data: 16/10/25 下午3:24
 	 * @Description: HTTP请求实现类
@@ -133,29 +133,29 @@
 	        return HTTPHelper.getInstance().doRequest(observable, resultType, listener);
 	    }
 
-	}`
+	}
 	此类是对第二步接口类的实现，具体接口得实现是在
-	`HTTPHelper.getInstance().init(Constant.BASE_PATH, INetInterface.class)`方法中操作，只需要讲第二步中的接口得class对象传入即可。
-	`HTTPHelper.getInstance().doRequest(observable, resultType, listener)`此方法返回Subscriber对象，可以用此对象来中断网络操作，比如在界面销毁时中断。
+	HTTPHelper.getInstance().init(Constant.BASE_PATH, INetInterface.class)方法中操作，只需要讲第二步中的接口得class对象传入即可。
+	HTTPHelper.getInstance().doRequest(observable, resultType, listener)此方法返回Subscriber对象，可以用此对象来中断网络操作，比如在界面销毁时中断。
 
 #####Activity或者Fragment或者其他业务中的使用
 	比如demo中的点击事件中，直接调用上一步的接口实现类的方法，并传递对应参数。
-	`mButton.setOnClickListener(new View.OnClickListener() {
+	mButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Log.i(TAG,"onClick");
                 HttpRequest.getInstance().getWeather("101010300.html",CODE,MainActivity.this);
             }
-        });`
+        });
 #####总结
 	三步实现网络请求
 		1.实现ResultSubscriber.OnResultListener监听
 		2.实现对应网络请求的接口类
 		3.对接口类进行实现
-		4.由于library不能从BuildConfig中读取Debug状态，如果调试期间需要打印log日志，可在Application中添加`AppFrame.initDebug(true)`方法
+		4.由于library不能从BuildConfig中读取Debug状态，如果调试期间需要打印log日志，可在Application中添加AppFrame.initDebug(true)方法
 ***
 ##HTTPHelper类中的初始化方法如下
-	`<T extends IModel> Subscriber	doRequest(<any> observable, int resultType, ResultSubscriber.OnResultListener listener)
+	<T extends IModel> Subscriber	doRequest(<any> observable, int resultType, ResultSubscriber.OnResultListener listener)
 	初始化观察者
 	static HTTPHelper getInstance()
 	获取单例对象
@@ -168,10 +168,10 @@
 	初始化
 	<I> I	init(String baseUrl, Class<I> clazz, long timeOut, Headers headers) 
 	HTTPHelper	setInterceptor(Interceptor mInterceptor)
-	设置拦截器`
+	设置拦截器
 ***
 ##Glide图片工具类使用方法及说明
-	`static void initImageIcon(int id) 
+	static void initImageIcon(int id) 
 	初始化默认的加载图
 	static void	into(android.content.Context context, File file, android.widget.ImageView view)
 	glide 从文件中加载图片
@@ -202,7 +202,7 @@
 	static void	intoRound(android.content.Context context, String url, int radius, android.widget.ImageView view)
 	圆或者圆角图片处理
 	static void	intoRound(android.content.Context context, String url, int radius, android.widget.ImageView view, int defaultId)
-	从字符串中加载圆形图片（网络地址或者本地地址）`
+	从字符串中加载圆形图片（网络地址或者本地地址）
 ***
 ###数据库处理方法
 
