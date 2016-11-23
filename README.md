@@ -156,7 +156,8 @@
 		1.实现ResultSubscriber.OnResultListener监听
 		2.实现对应网络请求的接口类
 		3.对接口类进行实现
-		4.由于library不能从BuildConfig中读取Debug状态，如果调试期间需要打印log日志，可在Application中添加AppFrame.initDebug(true)方法
+		4.由于library不能从BuildConfig中读取Debug状态，如果调试期间需要打印log日志，
+		可在Application中添加AppFrame.initDebug(true)方法
 ***
 ##HTTPHelper类中的初始化方法如下
 	<T extends IModel> Subscriber	doRequest(<any> observable, int resultType, ResultSubscriber.OnResultListener listener)
@@ -225,5 +226,8 @@ Email：496121717@qq.com, lzp4796121717@gmail.com
 
 	   http://www.apache.org/licenses/LICENSE-2.0
 
-	Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS,WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,either express or implied.
-	See the License for the specific language governing permissions and limitations under the License.
+	Unless required by applicable law or agreed to in writing, 
+	software distributed under the License is distributed on an "AS IS" BASIS,
+	WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND,either express or implied.
+	See the License for the specific language governing permissions and limitations 
+	under the License.
