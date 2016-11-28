@@ -218,7 +218,7 @@
 Email：496121717@qq.com, lzp4796121717@gmail.com
 有任何建议或者使用中遇到问题都可以给我发邮件, 你也可以加入QQ群：163411187技术交流，idea分享。
 ##License
-	Copyright 2013 Square, Inc.
+	Copyright 2013 起猿.
 
 	Licensed under the Apache License, Version 2.0 (the "License");
 	you may not use this file except in compliance with the License.
